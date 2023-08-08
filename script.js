@@ -37,7 +37,6 @@ let selectedLocationId;
 let options = {
     method: "GET",
     headers: {},
-    // cache: "no-store",
 };
 
 /////////////////////////////////
@@ -53,7 +52,6 @@ document.addEventListener("click", (event) => {
 searchField.addEventListener("keyup", getHints);
 searchField.addEventListener("search", () => {
     searchHints.classList.add("hidden");
-    // searchButton.classList.add("disabled");
 });
 searchField.addEventListener("click", (event) => {
     event.target.classList.remove("required");
@@ -81,7 +79,6 @@ function settingsValidate(event) {
 
     if (target === period) {
         switch (target[target.selectedIndex].value) {
-            // case "hours":
             case "days":
                 openCountOptions();
                 break;
@@ -102,9 +99,9 @@ function openCountOptions() {
 }
 
 function closeCountOptions() {
-    for (let i = 0; i < countOptions.length; i++) {
-        countOptions[i].setAttribute("disabled", "true");
-    }
+    countOptions.forEach((elem) => {
+        elem.setAttribute("disabled", "true");
+    });
 }
 
 function saveCity() {
@@ -157,8 +154,6 @@ function createSaveField(saveFromStorage) {
             break;
     }
 
-    // saveText.innerHTML = `${saveFromStorage ? saveFromStorage.cityName : cityName.innerHTML}, ${currentShowedPeriod === "days" ? `${currentShowedCount}, ${currentShowedPeriod}` : currentShowedPeriod}`;
-
     save.append(saveText);
 
     saveText = document.createElement("span");
@@ -180,6 +175,8 @@ function loadSave(event) {
 
 function loadSavesFromStorage() {
     let saves = JSON.parse(localStorage.getItem("savedCities"));
+
+    console.log(saves);
 
     for (let id in saves) {
         createSaveField(saves[id]);
@@ -227,21 +224,22 @@ async function search(event, save) {
 
     weatherCards.innerHTML = "";
 
-    currentShowedPeriod = settingsPeriod.value;
-    currentShowedCount = settingsCount.value;
-    currentShowedTemperature = settingsTemperature.value;
-    currentShowedWind = settingsWind.value;
+    currentShowedPeriod = save ? save.period : settingsPeriod.value;
+    currentShowedCount = save ? save.count : settingsCount.value;
+    currentShowedTemperature = save ? save.temp : settingsTemperature.value;
+    currentShowedWind = save ? save.wind : settingsWind.value;
+
+    console.log(save);
 
     let response = await fetch(createSearchLink(false, save), options);
+
     let forecastDaily = await response.json();
     forecastDaily = forecastDaily.forecast;
 
     response = await fetch(createSearchLink(true, save), options);
+
     let forecastThreehourly = await response.json();
     forecastThreehourly = forecastThreehourly.forecast;
-
-    // console.log(forecastDaily);
-    // console.log(forecastThreehourly);
 
     showWeatherCards(forecastDaily, forecastThreehourly);
 }
@@ -253,9 +251,6 @@ function createSearchLink(threehourly, settings) {
     let wind = settings ? settings.wind : settingsWind.value;
 
     switch (settings ? settings.period : settingsPeriod.value) {
-        // case "hours":
-        //     period = "hourly";
-        //     break;
         case "threedays":
             count = 3;
             break;
@@ -288,8 +283,6 @@ function selectHint(event) {
         searchHints.classList.add("hidden");
 
         searchField.classList.remove("required");
-
-        // searchButton.classList.remove("disabled");
 
         searchField.value = target.innerHTML;
 
@@ -399,7 +392,6 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
     windInfo.classList.add("wind_info");
 
     let windSpeed = document.createElement("div");
-    // windSpeed.classList.add("wind_speed");
 
     ///////
 
@@ -411,7 +403,7 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
     ///////
 
     let windText = document.createElement("span");
-    windText.innerHTML = `${forecastDay.maxWindSpeed} ${settingsWind.options[settingsWind.selectedIndex].dataset.name}`;
+    windText.innerHTML = `${forecastDay.maxWindSpeed} ${currentShowedWind}`;
 
     windSpeed.append(windSymbol);
     windSpeed.append(windText);
@@ -419,7 +411,6 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
     ///////////////
 
     let windDir = document.createElement("div");
-    // windDir.classList.add("wind_dir");
 
     let windDirSymbol = document.createElement("img");
     windDirSymbol.width = "30";
@@ -466,7 +457,6 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
     ///////////////
 
     let windDirDeg = document.createElement("div");
-    // windDirDeg.classList.add("wind_dir_deg");
 
     let windDirDegText = document.createElement("span");
     windDirDegText.innerHTML = `Deg °${forecastDay.windDir}`;
@@ -531,34 +521,3 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
 
     return weatherCard;
 }
-
-// async function check() {
-//     let response = await fetch(`https://pfa.foreca.com/api/v1/location/search/solikamsk?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9wZmEuZm9yZWNhLmNvbVwvYXV0aG9yaXplXC90b2tlbiIsImlhdCI6MTY3OTU4MDUyOCwiZXhwIjo5OTk5OTk5OTk5LCJuYmYiOjE2Nzk1ODA1MjgsImp0aSI6ImY0NmIwN2RiODExNjJlNjciLCJzdWIiOiJncmViZW5raW4tc2VyZ2VpMDMwODAwIiwiZm10IjoiWERjT2hqQzQwK0FMamxZVHRqYk9pQT09In0.5ejAr6-LsJ5PlZ8g6FkpUx_e08QeCuz1rStRQtItHaU`, options);
-
-//     let cityId = await response.json();
-//     console.log(cityId);
-//     cityId = cityId.locations[0].id;
-
-//     response = await fetch(`https://pfa.foreca.com/api/v1/forecast/3hourly/${cityId}?dataset=full&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9wZmEuZm9yZWNhLmNvbVwvYXV0aG9yaXplXC90b2tlbiIsImlhdCI6MTY3OTU4MDUyOCwiZXhwIjo5OTk5OTk5OTk5LCJuYmYiOjE2Nzk1ODA1MjgsImp0aSI6ImY0NmIwN2RiODExNjJlNjciLCJzdWIiOiJncmViZW5raW4tc2VyZ2VpMDMwODAwIiwiZm10IjoiWERjT2hqQzQwK0FMamxZVHRqYk9pQT09In0.5ejAr6-LsJ5PlZ8g6FkpUx_e08QeCuz1rStRQtItHaU`, options);
-
-//     let forecast = await response.json();
-//     forecast = forecast.forecast;
-
-//     forecast.forEach((elem) => {
-//         let div = document.createElement("div");
-
-//         // div.innerHTML = `Date: ${elem.date}
-//         // Temperature: from ${elem.minTemp} to ${elem.maxTemp}
-//         // `;
-
-//         div.innerHTML = `Date: ${elem.date}
-//         Temperature: from ${elem.time}
-//         `;
-
-//         document.body.append(div);
-//     });
-
-//     console.log(forecast);
-// }
-
-// check();
