@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Easy Weather</title>
+        <link rel="icon" href="./imgs/d200.png" />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Easy Weather</h1>
+            <div class="search_field">
+                <input id="city" class="city" type="search" placeholder="City..." autocomplete="off" />
+                <div class="hints hidden" id="hints"></div>
+                <input class="search" id="search" value="Search" type="button" />
+            </div>
+            <div class="settings_saves">
+                <div class="settings section" id="settings">
+                    <div class="opener" id="opener">Settings</div>
+                    <div class="settings_fields">
+                        <label for="period">
+                            <span>Period</span>
+                            <select name="period" id="period">
+                                <!-- <option value="hours">Hours</option> -->
+                                <option value="days">Days</option>
+                                <option value="threedays" selected>Three days</option>
+                                <option value="week">Week</option>
+                                <option value="twoweeks">Two weeks</option>
+                            </select>
+                        </label>
+                        <label for="count">
+                            <span>Count</span>
+                            <select name="count" id="count">
+                                <option value="1" disabled selected>1</option>
+                                <option value="2" disabled>2</option>
+                                <option value="3" disabled>3</option>
+                                <option value="4" disabled>4</option>
+                                <option value="5" disabled>5</option>
+                                <option value="6" disabled>6</option>
+                                <option value="7" disabled>7</option>
+                                <option value="8" disabled>8</option>
+                                <option value="9" disabled>9</option>
+                                <option value="10" disabled>10</option>
+                                <option value="11" disabled>11</option>
+                                <option value="12" disabled>12</option>
+                            </select>
+                        </label>
+                        <label for="temperature">
+                            <span>°C/°F</span>
+                            <select name="temperature" id="temperature">
+                                <option value="C">°C</option>
+                                <option value="F">°F</option>
+                            </select>
+                        </label>
+                        <label for="wind">
+                            <span>Speed</span>
+                            <select name="wind" id="wind">
+                                <option value="MS" data-name="M/s">Meters/S</option>
+                                <option value="KTS" data-name="Kts">Knots</option>
+                                <option value="KMH" data-name="K/h">Kilometers/H</option>
+                                <option value="MPH" data-name="M/h">Miles/H</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="saves section" id="saves">
+                    <div class="opener" id="opener">Saves</div>
+                    <div class="saves_fields" id="saves_fields">
+                        <!-- <div class="save">
+                            <span class="save_city_name">Perm, Perm Krai, Russia</span>
+                            <span class="save_remove_button">X</span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="city_name" id="city_name"></div>
+            <div class="save_city_button hidden" id="save_city_button">Save</div>
+            <div class="weather_cards" id="weather_cards">
+                <!-- <div class="weather_card">
+                    <div class="date">28.03.2023</div>
+                    <div class="divider"></div>
+                    <div class="symbol_temp_wind_info">
+                        <img src="./imgs/d420.png" alt="symbol" class="symbol" />
+                        <div class="temp">
+                            <div class="day_temp">+10</div>
+                            <div class="night_temp">-1</div>
+                        </div>
+                        <div class="wind_info">
+                            <div class="wind_speed">
+                                <img src="./imgs/wind.svg" alt="wind" width="30px" />
+                                <span>5 M/s</span>
+                            </div>
+                            <div class="wind_dir">
+                                <img src="./imgs/arrow_right_up.svg" alt="dir" width="30px" />
+                                <span>NW</span>
+                            </div>
+                            <div class="wind_dir_deg">
+                                <span>Deg °184</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="threehourly_temp_info">
+                        <div class="threehourly_temp">
+                            <span>00h</span>
+                            <span>+5</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>03h</span>
+                            <span>-12</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>06h</span>
+                            <span>+25</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>09h</span>
+                            <span>+25</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>12h</span>
+                            <span>+25</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>15h</span>
+                            <span>+25</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>18h</span>
+                            <span>+25</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="threehourly_temp">
+                            <span>21h</span>
+                            <span>+25</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <script src="./script.js"></script>
+    </body>
+</html>
