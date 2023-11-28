@@ -27,7 +27,7 @@ let currentShowedTemperature;
 let currentShowedWind;
 
 let token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9wZmEuZm9yZWNhLmNvbVwvYXV0aG9yaXplXC90b2tlbiIsImlhdCI6MTY5NTYzOTQ0NywiZXhwIjo5OTk5OTk5OTk5LCJuYmYiOjE2OTU2Mzk0NDcsImp0aSI6IjBhOTY2NWJiMjU2MmFlYjgiLCJzdWIiOiJnYWplbmFyNTY4IiwiZm10IjoiWERjT2hqQzQwK0FMamxZVHRqYk9pQT09In0.W0CpgYniLGLFMovnSRJJ8SSWwuEl9pBNfDu5uA4htPk";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9wZmEuZm9yZWNhLmNvbVwvYXV0aG9yaXplXC90b2tlbiIsImlhdCI6MTcwMTE1MzM3OSwiZXhwIjo5OTk5OTk5OTk5LCJuYmYiOjE3MDExNTMzNzksImp0aSI6IjIwYWFjNTFmZjFjZDEzYzMiLCJzdWIiOiJnb3dvaGlsODgyIiwiZm10IjoiWERjT2hqQzQwK0FMamxZVHRqYk9pQT09In0.nSIKMeQFMTJ83Du-F1aWZ6N5frOx4-yr6hLhUOcK8yM";
 
 let hintsTimer;
 
@@ -208,10 +208,7 @@ function showWeatherCards(forecastDaily, forecastThreehourly) {
 }
 
 async function search(event, save) {
-    if (
-        !save &&
-        (searchField.value === "Not found" || searchField.value.length < 3 || !searchHints.classList.contains("hidden"))
-    ) {
+    if (!save && (searchField.value === "Not found" || searchField.value.length < 3 || !searchHints.classList.contains("hidden"))) {
         searchField.classList.add("required");
         return;
     }
@@ -299,10 +296,7 @@ function getHints() {
 
     if (searchField.value.length >= 3) {
         hintsTimer = setTimeout(async () => {
-            let response = await fetch(
-                `https://pfa.foreca.com/api/v1/location/search/${searchField.value}?token=${token}`,
-                options
-            );
+            let response = await fetch(`https://pfa.foreca.com/api/v1/location/search/${searchField.value}?token=${token}`, options);
             let result = await response.json();
 
             searchHints.classList.remove("hidden");
@@ -486,9 +480,7 @@ function createWeatherCard(forecastDay, forecastThreehourly) {
 
             threehourlyTempText = document.createElement("span");
             threehourlyTempText.innerHTML =
-                forecastThreehourly[i].temperature > 0
-                    ? `+${forecastThreehourly[i].temperature}`
-                    : forecastThreehourly[i].temperature;
+                forecastThreehourly[i].temperature > 0 ? `+${forecastThreehourly[i].temperature}` : forecastThreehourly[i].temperature;
 
             threehourlyTemp.append(threehourlyTempText);
 
